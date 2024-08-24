@@ -1,0 +1,37 @@
+
+cmake_minimum_required(VERSION 3.0)
+project(MyProject)
+
+# 设置编译选项
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+#project_folder/
+#│
+#├── CMakeLists.txt
+#├── folder1/
+#│   ├── A.h
+#│   └── A.cpp
+#│
+#└── folder2/
+#    ├── B.h
+#    └── B.cpp
+
+
+# 添加文件夹1中的源文件
+add_library(folder1_sources
+    folder1/A.cpp
+)
+
+# 添加文件夹2中的源文件
+add_library(folder2_sources
+    folder2/B.cpp
+)
+
+# 添加可执行文件并链接两个库
+add_executable(main_executable main.cpp)
+target_link_libraries(main_executable folder1_sources folder2_sources)
+
+# 添加包含文件夹的路径
+target_include_directories(folder1_sources PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/folder1)
+target_include_directories(folder2_sources PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/folder2)
